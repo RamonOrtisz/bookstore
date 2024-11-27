@@ -6,7 +6,9 @@ from product.serializers.product_serializer import ProductSerializer
 
 
 class OrderSerializer(serializers.ModelSerializer):
-
+    # No corpo dessa classe, serão passados apenas os campos que serão
+    # alterados. Caso nenhum campo seja passado, seguirá o padrão presente
+    # no model.
 
     product = ProductSerializer(read_only=True, many=True)
     products_id = serializers.PrimaryKeyRelatedField(
