@@ -24,6 +24,7 @@ class CategoryViewSet(APITestCase):
         self.assertEqual(category_data["results"]
                          [0]["title"], self.category.title)
 
+
     def test_create_category(self):
         data = {"title": "technology"}
 
