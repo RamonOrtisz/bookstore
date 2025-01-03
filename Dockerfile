@@ -1,7 +1,7 @@
 # `python-base` sets up all our shared environment variables
-FROM python:3.12-slim AS python-base
+FROM python:3.12-slim as python-base
 
-# python
+    # python
 ENV PYTHONUNBUFFERED=1 \
     # prevents python creating .pyc files
     PYTHONDONTWRITEBYTECODE=1 \
@@ -51,7 +51,7 @@ WORKDIR $PYSETUP_PATH
 COPY poetry.lock pyproject.toml ./
 
 # install runtime deps - uses $POETRY_VIRTUALENVS_IN_PROJECT internally
-RUN poetry install --only main
+RUN poetry install --no-dev
 
 # quicker install as runtime deps are already installed
 RUN poetry install

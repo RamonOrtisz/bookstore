@@ -1,14 +1,11 @@
 from rest_framework.viewsets import ModelViewSet
 
 from product.models import Category
-from product.serializers import CategorySerializer
+from product.serializers.category_serializer import CategorySerializer
 
-# import pdb; pdb.set_trace()
 
 class CategoryViewSet(ModelViewSet):
     serializer_class = CategorySerializer
 
-
-
     def get_queryset(self):
-        return Category.objects.all().order_by("id")
+        return Category.objects.all().order_by('id')
