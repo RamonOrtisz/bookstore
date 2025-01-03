@@ -85,8 +85,8 @@ deps-py: $(PYTHON_VERSION_FILE) ## Installs Python development and runtime depen
 		--index-url $(PYPI_PROXY) \
 		pip
 	$(PIP) install --upgrade \
-                                     		--index-url $(PYPI_PROXY) \
-                                     		poetry
+        --index-url $(PYPI_PROXY) \
+        poetry
 	$(POETRY) install
 
 ##@ Code Quality
@@ -120,3 +120,11 @@ format-autopep8:
 .PHONY: format-isort
 format-isort:
 	$(RUN_PYPKG_BIN) isort --recursive .
+
+.PHONY: migrate
+migrate:
+	docker-compose exec web python manage.py migrate --noinput
+
+.PHONY: seed
+seed:
+	poetry run python manage.py seed
