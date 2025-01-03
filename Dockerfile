@@ -21,18 +21,30 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+
+#instalar depedencias do git
+RUN apt-get update && apt-get install -y \
+    git \
+    && apt-get clean
+
 # Copiar arquivos de configuração do Poetry
 WORKDIR /app
 COPY poetry.lock pyproject.toml ./
 
+COPY requirements.txt /app/
+RUN pip install -r requirements.txt
+
+
 # Instalar dependências do Poetry (runtime)
 RUN poetry install --no-dev
 
+RUN poetry install --no-root
+
 # Copiar código-fonte do projeto
-COPY . /app
+COPY . /app/
 
 # Expor a porta padrão do Django
 EXPOSE 8000
 
 # Comando padrão para rodar o servidor
-CMD ["poetry", "run", "python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
